@@ -1,0 +1,17 @@
+GET /carguruemail/_mappings?pretty
+
+GET carguruemail/email_leads/_search?pretty
+
+DELETE /carguruemail
+
+
+PUT carguruemail
+{
+  "mappings": {
+    "email_leads": {
+      "properties": {
+        "Date": {"type": "date"}
+      }
+    }
+  }
+}

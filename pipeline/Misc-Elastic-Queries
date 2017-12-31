@@ -1,0 +1,96 @@
+GET pcf_dev
+
+GET carguruemail/_search
+
+GET dealersocket/_search
+
+
+
+GET carguruemail/_search?pretty=true
+{
+  "query": {
+    "match": {
+      "": "2010 GT-R"
+    }
+  }
+}
+
+GET dealersocket/_search?pretty=true
+{
+  "query": {
+    "match": {
+      "Vehicle": "2010"
+      }
+    }
+}
+
+
+GET dealersocket/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {"Vehicle": "2010"}}
+      ],
+    "filter": [
+      {"match": {"Name": "Jorge Soto"}}
+       ]
+    }
+  }
+}
+
+GET dealersocket/_search?pretty=true
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match_phrase": {"Vehicle": "2010"}},
+        {"match": {"Name": "Jorge Soto"}}
+      ]
+
+    }
+  }
+}
+
+
+
+GET dealersocket/_search
+{
+  "query": {
+    "match": {
+      "host": "192.168.2.100"
+    }
+  }
+}
+
+
+POST dealersocket/_delete_by_query
+{
+  "query": {
+    "match": {
+      "host": "192.168.11.11"
+    }
+  }
+}
+
+
+GET dealersocket/_search
+{
+  "size": 0,
+  "aggs": {
+    "vehicle": {
+      "terms": {
+        "field": "Lead Source.keyword",
+        "size": 100
+      },
+      "aggs": {
+        "name": {
+          "terms": {
+            "field": "Vehicle.keyword"
+            , "size": 1000
+          }
+        }
+      }
+    }
+  }
+}
